@@ -1,0 +1,85 @@
+<h1 class="display-1 my-2">Edit page</h1>
+<table class="table">
+  <tr>
+    <th>_id</th>
+    <th>ubezpieczony</th>
+    <th>benzyna</th>
+    <th>uszkodzony</th>
+    <th>napęd 4x4</th>
+  </tr>
+  {{#each docs}}
+    {{#if this.is_edit_id}}
+      <tr>
+        <form method="post" id="edit_cars">
+          <td>{{this._id}}</td>
+          <td>
+            <select name="ubez" id="ubez">
+              <option {{#when this.ubez "check" "TAK" }}selected{{/when}} value="TAK">Tak</option>
+              <option {{#when this.ubez "check" "NIE" }}selected{{/when}} value="NIE">Nie</option>
+              <option {{#when this.ubez "check" "BRAK" }}selected{{/when}} value="BRAK">Brak Danych</option>
+            </select>
+          </td>
+          <td>
+            <select name="benz" id="benz">
+              <option {{#when this.benz "check" "TAK" }}selected{{/when}} value="TAK">Tak</option>
+              <option {{#when this.benz "check" "NIE" }}selected{{/when}} value="NIE">Nie</option>
+              <option {{#when this.benz "check" "BRAK" }}selected{{/when}} value="BRAK">Brak Danych</option>
+            </select>
+          </td>
+          <td>
+            <select name="uszk" id="uszk">
+              <option {{#when this.uszk "check" "TAK" }}selected{{/when}} value="TAK">Tak</option>
+              <option {{#when this.uszk "check" "NIE" }}selected{{/when}} value="NIE">Nie</option>
+              <option {{#when this.uszk "check" "BRAK" }}selected{{/when}} value="BRAK">Brak Danych</option>
+            </select>
+          </td>
+          <td>
+            <select name="nape" id="nape">
+              <option {{#when this.nape "check" "TAK" }}selected{{/when}} value="TAK">Tak</option>
+              <option {{#when this.nape "check" "NIE" }}selected{{/when}} value="NIE">Nie</option>
+              <option {{#when this.nape "check" "BRAK" }}selected{{/when}} value="BRAK">Brak Danych</option>
+            </select>
+          </td>
+          <td>
+            <button id="confirm" class="btn btn-danger" formaction="/edit" name="_id" value="{{this._id}}">Update</button>
+            <button id="cancel" class="btn btn-dark" formaction="/edit">Cancel</button>
+          </td>
+        </form>
+      </tr>
+    {{else}}
+      <tr>
+        <form method="get">
+          <td>{{this._id}}</td>
+          <td>{{this.ubez}}</td>
+          <td>{{this.benz}}</td>
+          <td>{{this.uszk}}</td>
+          <td>{{this.nape}}</td>
+          <td>
+            <button class="btn btn-dark" formaction="/edit" name="_id" value="{{this._id}}">Edit</button>
+          </td>
+        </form>
+      </tr>
+    {{/if}}
+  {{/each}}
+</table>
+<script defer>
+  var change = 0;
+  const btn_cancel = document.querySelector("#cancel")
+  btn_cancel.onclick = function() {
+    change = 0
+  }
+  const btn_confirm = document.querySelector("#confirm")
+  btn_confirm.onclick = function() {
+    change = 1
+  }
+
+  function logSubmit(event) {
+    if (change === 1) {
+      confirm("Confirm update?") ? form.submit() : null
+    } else {
+      form.submit()
+    }
+  }
+  const form = document.querySelector("#edit_cars");
+  form.addEventListener('submit', logSubmit)
+</script>

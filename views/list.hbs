@@ -1,0 +1,32 @@
+<h1 class="display-1 my-2">List page</h1>
+<form method="get" id="list">
+    <table class="table">
+        <tr>
+            <th>_id</th>
+            <th>ubezpieczony</th>
+            <th>benzyna</th>
+            <th>uszkodzony</th>
+            <th>napęd 4x4</th>
+        </tr>
+        {{#each docs}}
+        <tr>
+            <td>{{this._id}}</td>
+            <td>{{this.ubez}}</td>
+            <td>{{this.benz}}</td>
+            <td>{{this.uszk}}</td>
+            <td>{{this.nape}}</td>
+            <td>
+                <button formaction="../list&id={{this._id}}" type="submit" class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+</form>
+<script defer>
+    function logSubmit(event) {
+        confirm("Confirm delete") ? form.submit() : null
+    }
+
+    const form = document.querySelector("#list");
+    form.addEventListener('submit', logSubmit)
+</script>
